@@ -1,8 +1,11 @@
  🎓 Student Management Dashboard
 
 A responsive Student Management Dashboard built using React (Vite) + Tailwind CSS + Zustand + chart.js
+
 This project allows adding, editing, and viewing Students, Courses with a clean UI.  
+
 The app connects to a **self-hosted backend** for storing and retrieving data.
+
 Backend server URL =  https://student-dash-backend.onrender.com
 ---
 
