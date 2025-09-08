@@ -39,6 +39,14 @@ Backend server URL =  https://student-dash-backend.onrender.com
 - Export courses data as CSV.
 
 
+### Admin Settings
+
+- Shows dummy admin details (Name, Email, Role).  
+- Allows editing and updating profile information.  
+- Changes are saved in **localStorage** for persistence.  
+- Toggle between view and edit modes with Cancel/Save options.  
+
+
 ---
 
 ## 🛠️ Tech Stack

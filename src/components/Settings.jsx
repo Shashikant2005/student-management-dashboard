@@ -1,17 +1,21 @@
-"use client"
+import { useState, useEffect } from "react"
 
-import { useState } from "react"
-import DarkModeToggle from "./DarkModeToggle.jsx"
-
-const Settings = ({ darkMode, toggleDarkMode }) => {
-  const [profileData, setProfileData] = useState({
+const Settings = () => {
+  // Load initial profile from localStorage or fallback to dummy data
+  const initialProfile = JSON.parse(localStorage.getItem("adminProfile")) || {
     name: "Admin User",
     email: "admin@university.edu",
     role: "Administrator",
-  })
+  }
+
+  const [profileData, setProfileData] = useState(initialProfile)
   const [isEditing, setIsEditing] = useState(false)
 
-  // Handle profile form changes
+  // Save profile to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("adminProfile", JSON.stringify(profileData))
+  }, [profileData])
+
   const handleProfileChange = (e) => {
     const { name, value } = e.target
     setProfileData((prev) => ({
@@ -20,23 +24,14 @@ const Settings = ({ darkMode, toggleDarkMode }) => {
     }))
   }
 
-  // Handle profile update
   const handleProfileUpdate = (e) => {
     e.preventDefault()
-    // In a real app, this would make an API call
-    alert("Profile updated successfully!")
     setIsEditing(false)
   }
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Settings</h1>
-
-      {/* Dark Mode Toggle */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Appearance</h2>
-        <DarkModeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-      </div>
+      <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Admin Settings</h1>
 
       {/* Profile Settings */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
@@ -72,19 +67,6 @@ const Settings = ({ darkMode, toggleDarkMode }) => {
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Role</label>
-              <select
-                name="role"
-                value={profileData.role}
-                onChange={handleProfileChange}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              >
-                <option value="Administrator">Administrator</option>
-                <option value="Teacher">Teacher</option>
-                <option value="Staff">Staff</option>
-              </select>
-            </div>
             <div className="flex justify-end space-x-3">
               <button
                 type="button"
@@ -117,29 +99,6 @@ const Settings = ({ darkMode, toggleDarkMode }) => {
             </div>
           </div>
         )}
-      </div>
-
-      {/* System Information */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">System Information</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-          <div>
-            <span className="font-medium text-gray-500 dark:text-gray-400">Version:</span>
-            <span className="ml-2 text-gray-900 dark:text-white">1.0.0</span>
-          </div>
-          <div>
-            <span className="font-medium text-gray-500 dark:text-gray-400">Last Updated:</span>
-            <span className="ml-2 text-gray-900 dark:text-white">December 2024</span>
-          </div>
-          <div>
-            <span className="font-medium text-gray-500 dark:text-gray-400">Framework:</span>
-            <span className="ml-2 text-gray-900 dark:text-white">React + Vite</span>
-          </div>
-          <div>
-            <span className="font-medium text-gray-500 dark:text-gray-400">State Management:</span>
-            <span className="ml-2 text-gray-900 dark:text-white">Zustand</span>
-          </div>
-        </div>
       </div>
     </div>
   )
